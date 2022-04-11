@@ -1,6 +1,6 @@
 ## Frontend JavaScript support
 import
-  std/[httpcore, strutils, tables, dom],
+  std/[httpcore, strutils, tables],
   pkg/nodejs/jshttpclient,
   pkg/asyncutils,
   pure,
@@ -26,6 +26,8 @@ proc newAsyncExample*: AsyncExample =
 proc setContentType*(ex: Example, contentType: string) =
   ## Sets content type header
   ex.http.headers["Content-Type".cstring] = cstring(contentType)
+
+proc setTimeoutSync(ms: int) = {.emit: "setTimeout(function() { }, `ms`);".}
 
 proc setTimeoutAsync(ms: int): Future[void] =
   let promise = newPromise() do (res: proc(): void):
@@ -56,7 +58,7 @@ proc handleRateLimit(ex: Example, req: PureRequest, respHeaders: Headers): Futur
     when ex is AsyncExample:
       await setTimeoutAsync(resetMs)
     else:
-      discard setTimeout(proc(): void, resetMs)
+      setTimeoutSync(resetMs)
 
     let
       newReq = newRequest(req)
