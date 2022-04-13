@@ -5,7 +5,7 @@
 - Out of the box support for native C / C++ and JS backend.
 - Built in [jsony](https://github.com/treeform/jsony/) hooks for:
   - snake_case APIs,
-  - Option types,
+  - `Option` types,
 - Uses `fastsync` pragma from [asyncutils](https://github.com/tandy-1000/asyncutils) to enable sync / async with reduced code duplication.
 
 ### Used to build:
