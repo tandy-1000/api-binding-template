@@ -8,4 +8,5 @@
 
 ### Used to build:
 - [listenbrainz-nim](https://gitlab.com/tandy1000/listenbrainz-nim)
+- [lastfm-nim](https://gitlab.com/tandy1000/lastfm-nim)
 - [matrix-nim-sdk](https://github.com/dylhack/matrix-nim-sdk)
