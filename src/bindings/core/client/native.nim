@@ -1,9 +1,11 @@
 # C backend support
 import
   std/[httpclient, os, strutils, tables],
-  pkg/asyncutils,
   pure,
-  ".."/api
+  ../api,
+  ../../utils/asyncutils,
+  ../../utils/endutils
+include ../../utils/jsonyutils
 
 type
   SyncExample* = Example[HttpClient]

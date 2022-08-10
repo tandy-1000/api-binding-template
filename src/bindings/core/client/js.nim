@@ -2,9 +2,11 @@
 import
   std/[httpcore, strutils, tables],
   pkg/nodejs/jshttpclient,
-  pkg/asyncutils,
   pure,
-  ../api
+  ../api,
+  ../../utils/asyncutils,
+  ../../utils/endutils
+include ../../utils/jsonyutils
 
 type
   SyncExample* = Example[JsHttpClient]
