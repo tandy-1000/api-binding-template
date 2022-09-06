@@ -9,7 +9,7 @@ type
     httpMethod*: HttpMethod
   EndpointDraft* {.pure.} = object
     ## The EndpointDraft holds the endpoint, but
-    ## doesn't have the homeserver just yet, once
+    ## doesn't have the apiRoot just yet, once
     ## build(EndpointDraft) is called then it
     ## becomes an `Endpoint`.
     path*: string
@@ -34,15 +34,15 @@ func addQuery*(e: var Endpoint, query: openArray[(string, string)]): void =
   e.target.query = encodeQuery(query)
 
 ## Build an EndpointDraft into an Endpoint. Originally the EndpointDraft only
-## includes the path to the Matrix endpoint, but not the domain, port, or
+## includes the path to the endpoint, but not the domain, port, or
 ## protocol (http / https).
 func build*(
   endpoint: EndpointDraft,
-  homeserver: Uri,
+  apiRoot: Uri,
   pathParams, queryParams: varargs[(string, string)] = []): Endpoint =
   ## This builds the draft into an Endpoint by
   ## formatting the path, joining the with the
-  ## homeserver provided, and into an Endpoint.
+  ## apiRoot provided, and into an Endpoint.
 
   # Format the path
   var formatted = endpoint.path
@@ -58,13 +58,13 @@ func build*(
     formatted = replace(formatted, fmt"%{key}", encoded)
 
   # Join it all together
-  let target = homeserver / formatted ? queryParams
+  let target = apiRoot / formatted ? queryParams
   return Endpoint(target: target, httpMethod: endpoint.httpMethod)
 
 ## Alias for build(Endpoint).
 func build*(
   endpoint: EndpointDraft,
-  homeserver: string,
+  apiRoot: string,
   pathParams, queryParams: varargs[(string, string)] = []): Endpoint =
-  var server = parseUri homeserver
+  var server = parseUri apiRoot
   return endpoint.build(server, pathParams, queryParams)
