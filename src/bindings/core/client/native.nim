@@ -3,8 +3,7 @@ import
   std/[httpclient, os, strutils, tables],
   pure,
   ../api,
-  ../../utils/asyncutils,
-  ../../utils/endutils
+  ../../utils
 include ../../utils/jsonyutils
 
 type
@@ -67,6 +66,9 @@ proc request*(ex: Example, req: PureRequest): Future[PureResponse] {.fastsync.} 
     if code == Http429:
       return await ex.handleRateLimit(req, resp.headers)
     responseCheck(code)
+
+  when defined(debug):
+    echo payload
 
   # Parse their response and give it back as a PureResponse
   return PureResponse(
