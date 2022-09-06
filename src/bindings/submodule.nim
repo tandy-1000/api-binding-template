@@ -1,6 +1,6 @@
 from std/httpcore import HttpMethod
-import pkg/asyncutils
-import utils/[client, api]
+import core, utils
+include utils/jsonyutils
 
 proc getExample*(ex: Example): Future[string] {.fastsync.} =
   ## Get ...
